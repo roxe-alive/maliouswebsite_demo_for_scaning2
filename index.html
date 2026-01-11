@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Screen Capture Demo</title>
+</head>
+<body>
+
+<h2>Screen Capture Demo (Training Only)</h2>
+<p>This demo requires your permission and does not record or upload.</p>
+<button onclick="startCapture()">Share Screen</button>
+<br><br>
+<video autoplay style="width:80%;border:1px solid #ccc;"></video>
+
+<script>
+async function startCapture() {
+  try {
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+      video: true
+    });
+    document.querySelector("video").srcObject = stream;
+  } catch (err) {
+    alert("Screen sharing denied.");
+  }
+}
+</script>
+
+</body>
+</html>
