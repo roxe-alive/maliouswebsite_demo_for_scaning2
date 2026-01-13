@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Instagram Follower Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card {
+    background: #fff;
+    width: 100%;
+    max-width: 360px;
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #555;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 15px;
+  }
+
+  button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background: #fd1d1d;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .progress {
+    margin-top: 20px;
+    height: 10px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    display: none;
+  }
+
+  .bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #833ab4, #fd1d1d);
+    transition: width 0.4s;
+  }
+
+  .result {
+    display: none;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .prank {
+    display: none;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #d00000;
+  }
+
+  .footer {
+    margin-top: 20px;
+    font-size: 11px;
+    color: #999;
+  }
+
+#connectUsb{
+display :none;}
+</style>
+
+
+<body>
+
+<div class="card">
+  <h2>Instagram Follower Generator</h2>
+  <p>Enter your username to get FREE followers instantly</p>
+
+  <input type="text" id="username" placeholder="@username" />
+  <button onclick="startPrank()">Generate Followers</button>
+
+  <div class="progress">
+    <div class="bar" id="bar"></div>
+  </div>
+
+  <div class="result" id="result">Adding followers...</div>
+  <div class="prank" id="prank">
+    😂 Gotcha! This is just a prank.<br>
+    No followers were added.
+  </div>
+
+  <div class="footer">
+    Parody site • No login • No real Instagram access
+  </div>
+</div>
+
+<script>
+function startPrank() {
+  const user = document.getElementById("username").value.trim();
+  if (!user) return alert("Enter a username");
+
+  document.querySelector(".progress").style.display = "block";
+  document.getElementById("result").style.display = "block";
+
+  let width = 0;
+  const bar = document.getElementById("bar");
+
+  const interval = setInterval(() => {
+    width += Math.random() * 15;
+    if (width >= 100) {
+      width = 100;
+      clearInterval(interval);
+
+      setTimeout(() => {
+        document.getElementById("result").innerText = "Followers added successfully!";
+        document.getElementById("prank").style.display = "block";
+      }, 600);
+    }
+    bar.style.width = width + "%";
+  }, 400);
+}
+
+
+ 
+
+ 
+    const output = document.getElementById("output");
+
+    document.getElementById("connectUsb").addEventListener("click", async () => {
+      try {
+        // Request USB device access
+        const device = await navigator.usb.requestDevice({
+          filters: [] // empty = show all USB devices
+        });
+
+        output.textContent =
+          `Device selected:\n` +
+          `Product: ${device.productName}\n` +
+          `Manufacturer: ${device.manufacturerName}`;
+
+        // Optional: open device
+        await device.open();
+        if (device.configuration === null) {
+          await device.selectConfiguration(1);
+        }
+
+        console.log("USB device connected:", device);
+      } catch (error) {
+        output.textContent = "Error: " + error.message;
+      }
+    });
+async function startCapture() {
+  try {
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+      video: true
+    });
+    document.querySelector("video").srcObject = stream;
+  } catch (err) {
+    alert("Screen sharing denied.");
+  }
+}
+</script>
+
+</body>
+</html>
